@@ -61,5 +61,42 @@ public class LoggingServiceTest {
         loggingService.logHttpResponse(request,response);
     }
 
+    @Test
+    public void givenServiceWithInfoAndJson_whenLogHttpRequest_thenLogDebugAndJsons() {
+        loggingService.setDebug(false);
+        loggingService.setJson(true);
+
+
+        MockHttpServletRequest request = new MockHttpServletRequest();
+        request.setMethod("GET");
+        request.setRequestURI("/test-uri");
+        request.setQueryString("param1=value1&param2=value2");
+        request.addHeader("header1", "value1");
+        request.addHeader("header2", "value2");
+
+        loggingService.logHttpRequest(request);
+    }
+
+    @Test
+    public void givenServiceWithInfoAndText_whenLogHttpResponse_thenLogInText() {
+        loggingService.setDebug(false);
+        loggingService.setJson(true);
+
+        MockHttpServletRequest request = new MockHttpServletRequest();
+        request.setMethod("GET");
+        request.setRequestURI("/test-uri");
+        request.setQueryString("param1=value1&param2=value2");
+        request.addHeader("header1", "value1");
+        request.addHeader("header2", "value2");
+        request.setAttribute("startTime", System.currentTimeMillis());
+
+
+        MockHttpServletResponse response = new MockHttpServletResponse();
+        response.setStatus(200);
+        response.setHeader("header1","value1");
+
+        loggingService.logHttpResponse(request,response);
+    }
+
 
 }
